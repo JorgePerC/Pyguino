@@ -1,5 +1,6 @@
 # Clase para manejar los estados del pinguino
 import numpy as np
+import pygame
 
 class Pinguino:
     #Private variable
@@ -8,12 +9,14 @@ class Pinguino:
     __up_down = None
     __height = None
 
-    def __init__(self):
+    def __init__(self, window):
+        self.window = window
         self.y_Line = 100
         self.__isJumping = False
         self.__up_down = False
         self.__height = 0
         self.__jumpLinspace = np.linspace(0, self.y_Line, self.y_Line + 1, endpoint=True)
+        self.image = pygame.image.load("resources/lolly_100.png") 
         pass
     
     def jump(self):
@@ -22,10 +25,10 @@ class Pinguino:
                 self.__height +=1
             else:
                 self.__height -=1
-        
         # Me indica cuando termina el brinco
         if self.__height == 0:
-            print("Termino brinco")
+            # print("Termino brinco")
+            # print("------------")
             self.__isJumping = False
             return self.__jumpLinspace[0]
         # Si llega a la altura máxima, empieza a bajar 
@@ -33,7 +36,10 @@ class Pinguino:
             self.__up_down = False
         # Return la diferencia de pixeles. Aka, altura
         return self.__jumpLinspace[self.__height]
-        
+    
+    def show(self):
+        self.window.blit(self.image, (10, self.jump()))
+    
     @property #Lo ponemos como una propiedad, para que el setter se vea bonito
     def isJumping(self):
         return self.__isJumping
@@ -41,6 +47,14 @@ class Pinguino:
     @isJumping.setter #Lo ponemos como un decorator, para que el getter se vea bonito
     def isJumping(self, value : bool):
         self.__isJumping = value   
-
+    #-------------------------------------------------
+    @property #Lo ponemos como una propiedad, para que el setter se vea bonito
+    def up_down(self):
+        return self.__up_down
+    
+    @up_down.setter #Lo ponemos como un decorator, para que el getter se vea bonito
+    def up_down(self, value : bool):
+        self.__up_down = value  
+    
     def setUp(self, value: bool):
         self.__up_down = value
