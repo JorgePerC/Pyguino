@@ -5,8 +5,10 @@
 import pygame
 import numpy as np
 from gameComponents.Colores import Colores
+from gameComponents.Pinguino import Pinguino
 
 colores = Colores()
+almaPinguino = Pinguino()
 
 # activate the pygame library . 
 # initiate pygame and give permission 
@@ -15,11 +17,11 @@ pygame.init()
   
 # assigning values to X and Y variable 
 X = 700
-Y = 700
+Y = 500
 
 y_Line = 350
 
-x_Axis = np.linspace(-400, X, 100, endpoint=True)
+x_Axis = np.linspace(-900, X, 5001, endpoint=True)
 y_Axis = np.linspace(0, y_Line, endpoint=True)
 
 # create the display surface object 
@@ -30,8 +32,8 @@ windowSurface = pygame.display.set_mode((X, Y ))
 pygame.display.set_caption('Pyguino') 
   
 # create a surface object, image is drawn on it. 
-pinguino = pygame.image.load("resources/pinguino.png") 
-montana = pygame.image.load("resources/montana.png") 
+pinguino = pygame.image.load("resources/lolly_100.png") 
+montana = pygame.image.load("resources/cac1.png") 
 
 x_pos = 0
 y_pos = 0
@@ -39,7 +41,7 @@ while True :
   
     # completely fill the surface object 
     # with white colour 
-    windowSurface.fill(colores.black) 
+    windowSurface.fill(colores.blue) 
 
     pygame.draw.line(windowSurface, colores.white, [0,y_Line], [X, y_Line], 5)
   
@@ -47,9 +49,9 @@ while True :
     # to the display surface object at 
     # (0, 0) coordinate. 
     
-    windowSurface.blit(pinguino, (x_Axis[x_pos], 0)) 
+    windowSurface.blit(montana, (x_Axis[x_pos], 0)) 
 
-    windowSurface.blit(montana, (10, y_Axis[0])) 
+    windowSurface.blit(pinguino, (10, y_pos)) 
     
     
     
@@ -71,8 +73,12 @@ while True :
         if event.type == pygame.KEYDOWN:
             # If up arrow was pressed
             if event.key == pygame.K_UP:
-                y_pos +=1
-    
+                    almaPinguino.isJumping = True
+                    almaPinguino.setUp(True)
+                
+    if almaPinguino.isJumping:
+        y_pos = almaPinguino.jump()
+
     # Draws the surface object to the screen.   
     pygame.display.update()  
     if x_pos == -len(x_Axis):
