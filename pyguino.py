@@ -37,8 +37,10 @@ ambiente = Ambiente(windowSurface, X)
 almaPinguino = Pinguino(windowSurface)
 
 # Vamos a crear un evento
-pygame.time.set_timer (pygame.USEREVENT , 1000 )
+pygame.time.set_timer (pygame.USEREVENT, 1500 )
 pygame.key.set_repeat(1)
+
+#Añadir records
 
 while True : 
    

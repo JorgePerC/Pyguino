@@ -5,6 +5,8 @@ import numpy as np
 from collections import deque 
 # https://www.geeksforgeeks.org/queue-in-python/
 
+from PIL import Image
+
 class Ambiente:
     # Voy a hacer una lista con los obstaculos
     # Qeque y deqeque dependiendo de cual se su
@@ -35,8 +37,12 @@ class Ambiente:
 
     #Return a random image
     def selectObject(self):
-        return pygame.image.load("resources/" + self.imgs[random.randint(0,len(self.imgs)-1)]) 
+        return "resources/" + self.imgs[random.randint(0,len(self.imgs)-1)]
     
     def addCactus(self):
         print("Aded image")
-        self.obstaculos.append([self.selectObject(), self.X])
+        #read the image
+        img = self.selectObject()
+        im = Image.open(img)
+        #List [image, position, width, height]
+        self.obstaculos.append([ pygame.image.load(img), self.X, im.size[0], im.size[1] ])
