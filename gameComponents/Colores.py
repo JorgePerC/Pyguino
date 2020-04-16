@@ -8,9 +8,7 @@ class Colores:
         self.veryGreen = (0,255,0)
         self.veryRed = (255,0,0)
         self.veryBlue = (0,0,255)
-        self.colors = {
-            "white": (255,255,255)
-        }
-        pass
-    def getColor(self, color : str):
-        return self.colors.get(color)
+        self.pink = (255, 153, 255)
+        self.orange (255, 102, 0)
+        self.brown = (102, 51, 0)
+        self.purple = (102, 0, 204)

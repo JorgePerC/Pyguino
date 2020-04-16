@@ -29,7 +29,7 @@ Y = 400
 y_Line = 350
 
 # create the display surface object 
-# of specific dimension..e(X, Y). 
+# of specific dimension...(X, Y). 
 windowSurface = pygame.display.set_mode((X, Y))
 #  ------------------------------------------
 #  |[0,0]           x --> X            [n,0]|
@@ -42,16 +42,14 @@ windowSurface = pygame.display.set_mode((X, Y))
 #  |[0,n]                              [n,n]|
 #  ------------------------------------------
 
-# set_timer(eventid, milliseconds) -> None
-
 # set the pygame window name 
 pygame.display.set_caption('Pyguino') 
   
-# create a surface object, image is drawn on it.
-
+# create a surface object, images are drawn on it.
 ambiente = Ambiente(windowSurface, X)
 almaPinguino = Pinguino(windowSurface)
 
+# set_timer(eventid, milliseconds) -> None
 # Vamos a crear un evento
 pygame.time.set_timer (pygame.USEREVENT, 1500 )
 pygame.key.set_repeat(1)
