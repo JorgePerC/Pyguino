@@ -8,6 +8,12 @@ from gameComponents.Colores import Colores
 from gameComponents.Pinguino import Pinguino
 from gameComponents.Ambiente import Ambiente
 
+
+def colision(data1, data2):
+    # [xPos, yPos, width, height]
+    
+    pass
+
 colores = Colores()
 
 
@@ -25,6 +31,16 @@ y_Line = 350
 # create the display surface object 
 # of specific dimension..e(X, Y). 
 windowSurface = pygame.display.set_mode((X, Y))
+#  ------------------------------------------
+#  |[0,0]           x --> X            [n,0]|
+#  |                                        |
+#  |   y                                    |
+#  |   ¦                                    |
+#  |   v                                    |
+#  |   Y                                    |
+#  |                                        |
+#  |[0,n]                              [n,n]|
+#  ------------------------------------------
 
 # set_timer(eventid, milliseconds) -> None
 

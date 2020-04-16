@@ -58,3 +58,8 @@ class Pinguino:
     
     def setUp(self, value: bool):
         self.__up_down = value
+    
+    def pinguinData(self):
+        # [xPos, yPos, width, height]
+        return []
+        pass

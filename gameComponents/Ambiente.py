@@ -46,3 +46,7 @@ class Ambiente:
         im = Image.open(img)
         #List [image, position, width, height]
         self.obstaculos.append([ pygame.image.load(img), self.X, im.size[0], im.size[1] ])
+
+    def incomingObstacleData(self):
+        # [xPos, yPos, width, height]
+        pass
