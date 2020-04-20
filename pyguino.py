@@ -7,12 +7,13 @@ import numpy as np
 from gameComponents.Colores import Colores
 from gameComponents.Pinguino import Pinguino
 from gameComponents.Ambiente import Ambiente
-
+# from gameComponents.AllGame import Colores, Pinguino, Ambiente
 
 def colision(data1, data2):
-    # [xPos, yPos, width, height]
-    
-    pass
+    if (data1[1] < data2[1]-data2[3]) and (data1[0] + data1[2] > data2[0]):
+        return True
+    else:
+        return False
 
 colores = Colores()
 
@@ -46,23 +47,26 @@ windowSurface = pygame.display.set_mode((X, Y))
 pygame.display.set_caption('Pyguino') 
   
 # create a surface object, images are drawn on it.
-ambiente = Ambiente(windowSurface, X)
+ambiente = Ambiente(windowSurface)
 almaPinguino = Pinguino(windowSurface)
 
 # set_timer(eventid, milliseconds) -> None
 # Vamos a crear un evento
 pygame.time.set_timer (pygame.USEREVENT, 1500 )
-pygame.key.set_repeat(1)
+
+# Me permite brincar si dejo presionado
+pygame.key.set_repeat(100)
 
 #Añadir records
 
 while True : 
    
-    # completely fill the surface object 
-    # with white colour 
+    # completely fill the surface object
     windowSurface.fill(colores.veryBlue) 
+    # Draw a line
+    pygame.draw.rect(windowSurface,colores.white,(0,y_Line, X, Y-y_Line))
 
-    pygame.draw.line(windowSurface, colores.white, [0,y_Line], [X, y_Line], 5)
+    #pygame.draw.line(windowSurface, colores.white, [X, y_Line])
 
     # iterate over the list of Event objects 
     # that was returned by pygame.event.get() method. 
@@ -79,7 +83,6 @@ while True :
     
         # Update the keyboard readings
         # K_UP -> up arrow
-        
         if event.type == pygame.KEYDOWN:
             
             # If up arrow was pressed
@@ -89,12 +92,19 @@ while True :
                 else: 
                     almaPinguino.isJumping = True
                     almaPinguino.setUp(True)
+            if event.key == pygame.K_DOWN:
+                if almaPinguino.isJumping:
+                    almaPinguino.setUp(False)
                     
-        # En caso de haber pasado un segundo, 
+        # En caso de haber pasado un segundo,
+        # añadir nuevo obstaculo 
         if event.type == pygame.USEREVENT:
             ambiente.addCactus()
-    almaPinguino.show()
+
     ambiente.move()
+    almaPinguino.show()
+    # if colision(almaPinguino.pinguinData(), ambiente.incomingObstacleData()):
+    #     print("K")
     # Draws the surface object to the screen.   
     pygame.display.update()  
     

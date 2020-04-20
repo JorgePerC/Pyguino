@@ -11,13 +11,17 @@ class Pinguino:
 
     def __init__(self, window):
         self.window = window
-        self.y_Line = 100
+        self.y_Line = 350
+        self.X = 10
         self.__isJumping = False
         self.__up_down = False
         self.__height = 0
         self.__jumpLinspace = np.linspace(0, self.y_Line, self.y_Line + 1, endpoint=True)
         self.image = pygame.image.load("resources/lolly_100.png") 
-        pass
+        
+        self.width = self.image.get_width()
+        self.imgH = self.image.get_height()
+        
     
     def jump(self):
         if self.__isJumping:
@@ -38,7 +42,7 @@ class Pinguino:
         return self.__jumpLinspace[self.__height]
     
     def show(self):
-        self.window.blit(self.image, (10, self.jump()))
+        self.window.blit(self.image, (10, self.y_Line - self.imgH -self.jump()))
     
     @property #Lo ponemos como una propiedad, para que el setter se vea bonito
     def isJumping(self):
@@ -61,5 +65,4 @@ class Pinguino:
     
     def pinguinData(self):
         # [xPos, yPos, width, height]
-        return []
-        pass
+        return [self.X, self.__jumpLinspace[self.__height], self.width, self.imgH]

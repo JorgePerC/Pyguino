@@ -9,6 +9,6 @@ class Colores:
         self.veryRed = (255,0,0)
         self.veryBlue = (0,0,255)
         self.pink = (255, 153, 255)
-        self.orange (255, 102, 0)
+        self.orange = (255, 102, 0)
         self.brown = (102, 51, 0)
         self.purple = (102, 0, 204)
