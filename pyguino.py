@@ -63,13 +63,14 @@ pygame.key.set_repeat(100)
 
 #Añadir records
 
-# completely fill the surface object
-windowSurface.fill(colores.veryBlue) 
-# Draw a rectangle
-pygame.draw.rect(windowSurface,colores.white,(0,y_Line, X, Y-y_Line))
-clock = pygame.time.Clock
+
+clock = pygame.time.Clock()
 
 while True : 
+    # completely fill the surface object
+    windowSurface.fill(colores.veryBlue) 
+    # Draw a rectangle
+    pygame.draw.rect(windowSurface,colores.white,(0,y_Line, X, Y-y_Line))
     clock.tick_busy_loop(40) 
     # iterate over the list of Event objects 
     # that was returned by pygame.event.get() method. 

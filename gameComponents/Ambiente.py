@@ -18,7 +18,7 @@ class Ambiente:
         self.x_Axis = np.linspace(-40, self.X, (40 + self.X + 1), endpoint=True)
         self.obstaculos = deque() 
         self.Y = 350
-        self.imgs = ["cac3.png", "mini_ghost3.jpg", "mini_ghost4.png", "mini_ghost.png", "mini_ghost2.png" ]
+        self.imgs = ["bigSnowball.png", "cloud.png", "win.png" ]
         self.loadedImages = [] # Para que ve se abran una vez, en vez de siempre
         self.loadImages() # Para abrir todos mis archivos
     
@@ -30,7 +30,7 @@ class Ambiente:
         for cactus in list(self.obstaculos): # La volvemos lista para evitar el "eque mutated during iteration"
             #Show my cactus at x, y
             #self.window.blit(self.loadedImages[cactus[0]], (self.x_Axis[cactus[1]], self.Y-cactus[3])) 
-            self.loadedImages[cactus[0]].scroll( cactus[1], 0)
+            self.window.blit(self.loadedImages[cactus[0]], (self.x_Axis[cactus[1]], self.Y-cactus[3])) 
             #If my individual cactus has reach the border
             if cactus[1] == self.x_Axis[0]:
                 print("Removed image at pos " + str(cactus[1]))
@@ -57,4 +57,18 @@ class Ambiente:
             return[150,self.Y, 100, 100]
         # [xPos, yPos, width, height]
         return [self.x_Axis[halfData[1]], self.Y, halfData[2], halfData[3]]
-        
+    
+# When we use a parenthesis in a class, we use inheritance
+# class GameObstacle(pygame.surface):
+#     def __init__(self, kind: str, xPos :int = 0 , yPos: int = 0):
+#         pygame.Surface.__init__(self, 0,0 )
+#         self.dayImg = pygame.image.load("resources/Day/day" + kind)
+#         self.nightImg = pygame.image.load("resources/Night/night" + kind)
+#         self.__dayTime = True
+#         self.xPos = 0
+#         self.yPos = 0
+
+class GameObstacle(pygame.Surface):
+    def __init__(self, width, height, image):
+        pygame.Surface.__init__(self, width, height)
+        self.blit(image, (0, 0, width, height))
