@@ -9,6 +9,10 @@ from gameComponents.Pinguino import Pinguino
 from gameComponents.Ambiente import Ambiente
 # from gameComponents.AllGame import Colores, Pinguino, Ambiente
 
+# Somebody on the internet, said I should investigate engines to make my program
+# more efficient. https://www.youtube.com/watch?v=lpGNeS-yRDo
+# async lib
+
 def colision(data1, data2):
     if (data1[1] < data2[1]-data2[3]) and (data1[0] + data1[2] > data2[0]):
         return True
@@ -59,15 +63,14 @@ pygame.key.set_repeat(100)
 
 #Añadir records
 
+# completely fill the surface object
+windowSurface.fill(colores.veryBlue) 
+# Draw a rectangle
+pygame.draw.rect(windowSurface,colores.white,(0,y_Line, X, Y-y_Line))
+clock = pygame.time.Clock
+
 while True : 
-   
-    # completely fill the surface object
-    windowSurface.fill(colores.veryBlue) 
-    # Draw a line
-    pygame.draw.rect(windowSurface,colores.white,(0,y_Line, X, Y-y_Line))
-
-    #pygame.draw.line(windowSurface, colores.white, [X, y_Line])
-
+    clock.tick_busy_loop(40) 
     # iterate over the list of Event objects 
     # that was returned by pygame.event.get() method. 
     for event in pygame.event.get() : 
@@ -87,14 +90,12 @@ while True :
             
             # If up arrow was pressed
             if event.key == pygame.K_UP:
-                if almaPinguino.isJumping:
-                    pass
-                else: 
+                if not almaPinguino.isJumping:
                     almaPinguino.isJumping = True
-                    almaPinguino.setUp(True)
+                    almaPinguino.up_down = True
             if event.key == pygame.K_DOWN:
                 if almaPinguino.isJumping:
-                    almaPinguino.setUp(False)
+                    almaPinguino.up_down = False
                     
         # En caso de haber pasado un segundo,
         # añadir nuevo obstaculo 

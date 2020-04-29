@@ -60,9 +60,6 @@ class Pinguino:
     def up_down(self, value : bool):
         self.__up_down = value  
     
-    def setUp(self, value: bool):
-        self.__up_down = value
-    
     def pinguinData(self):
         # [xPos, yPos, width, height]
         return [self.X, self.__jumpLinspace[self.__height], self.width, self.imgH]

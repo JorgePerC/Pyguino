@@ -15,7 +15,7 @@ class Ambiente:
     def __init__(self, window):
         self.window = window
         self.X = window.get_width()
-        self.x_Axis = np.linspace(-10, self.X, (10 + self.X + 1), endpoint=True)
+        self.x_Axis = np.linspace(-40, self.X, (40 + self.X + 1), endpoint=True)
         self.obstaculos = deque() 
         self.Y = 350
         self.imgs = ["cac3.png", "mini_ghost3.jpg", "mini_ghost4.png", "mini_ghost.png", "mini_ghost2.png" ]
@@ -29,7 +29,8 @@ class Ambiente:
     def move(self):
         for cactus in list(self.obstaculos): # La volvemos lista para evitar el "eque mutated during iteration"
             #Show my cactus at x, y
-            self.window.blit(self.loadedImages[cactus[0]], (self.x_Axis[cactus[1]], self.Y-cactus[3])) 
+            #self.window.blit(self.loadedImages[cactus[0]], (self.x_Axis[cactus[1]], self.Y-cactus[3])) 
+            self.loadedImages[cactus[0]].scroll( cactus[1], 0)
             #If my individual cactus has reach the border
             if cactus[1] == self.x_Axis[0]:
                 print("Removed image at pos " + str(cactus[1]))
