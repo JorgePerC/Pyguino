@@ -16,7 +16,7 @@ class Ambiente:
         self.x_Axis = np.linspace(-10, self.X, (10 + self.X + 1), endpoint=True)
         self.obstaculos = deque() 
         self.Y = 350
-        self.imgs = ["cac3.png", "mini_ghost3.jpg", "mini_ghost4.png", "mini_ghost.png", "mini_ghost2.png" ]
+        self.imgs = ["win.png", "cloud.jpg", "bigSnowball.png" ]
         self.loadedImages = [] # Para que ve se abran una vez, en vez de siempre
         self.loadImages() # Para abrir todos mis archivos
     

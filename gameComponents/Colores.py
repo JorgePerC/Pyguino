@@ -3,6 +3,15 @@
 class Colores:
     # define the RGB value 
     def __init__(self):
+        self.daySky = (189,228,253)
+        self.daySnow = (255,255,255)
+
+        self.nightSky = (68,68,68)
+        self.nightSnow = (214,214,214)
+
+        self.water = (42,113,189)
+        self.wSnow = (155,172,191)
+
         self.white = (255,255,255)
         self.black = (0,0,0)
         self.veryGreen = (0,255,0)

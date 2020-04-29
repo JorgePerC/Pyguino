@@ -17,7 +17,7 @@ class Pinguino:
         self.__up_down = False
         self.__height = 0
         self.__jumpLinspace = np.linspace(0, self.y_Line, self.y_Line + 1, endpoint=True)
-        self.image = pygame.image.load("resources/lolly_100.png") 
+        self.image = pygame.image.load("resources/lolly.png") 
         
         self.width = self.image.get_width()
         self.imgH = self.image.get_height()

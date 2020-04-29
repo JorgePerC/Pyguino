@@ -64,10 +64,10 @@ pygame.key.set_repeat(100)
 #Añadir records
 
 # completely fill the surface object
-windowSurface.fill(colores.veryBlue) 
+windowSurface.fill(colores.daySky) 
 # Draw a rectangle
-pygame.draw.rect(windowSurface,colores.white,(0,y_Line, X, Y-y_Line))
-clock = pygame.time.Clock
+pygame.draw.rect(windowSurface,colores.daySnow,(0,y_Line, X, Y-y_Line))
+clock = pygame.time.Clock()
 
 while True : 
     clock.tick_busy_loop(40) 
