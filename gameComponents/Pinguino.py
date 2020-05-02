@@ -3,11 +3,8 @@ import numpy as np
 import pygame
 
 class Pinguino:
-    #Private variable
-    __isJumping = None
-    __jumpLinspace = None
-    __up_down = None
-    __height = None
+    # We define a private variable:
+    # __name = None
 
     def __init__(self, window):
         self.window = window
@@ -42,6 +39,7 @@ class Pinguino:
         return self.__jumpLinspace[self.__height]
     
     def show(self):
+        
         self.window.blit(self.image, (10, self.y_Line - self.imgH -self.jump()))
     
     @property #Lo ponemos como una propiedad, para que el setter se vea bonito

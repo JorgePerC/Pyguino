@@ -4,23 +4,13 @@
 
 import pygame
 import numpy as np
-from gameComponents.Colores import Colores
 from gameComponents.Pinguino import Pinguino
-from gameComponents.Ambiente import Ambiente
+from gameComponents.startOver import Background, GameObstacle
 # from gameComponents.AllGame import Colores, Pinguino, Ambiente
 
 # Somebody on the internet, said I should investigate engines to make my program
 # more efficient. https://www.youtube.com/watch?v=lpGNeS-yRDo
 # async lib
-
-def colision(data1, data2):
-    if (data1[1] < data2[1]-data2[3]) and (data1[0] + data1[2] > data2[0]):
-        return True
-    else:
-        return False
-
-colores = Colores()
-
 
 # activate the pygame library . 
 # initiate pygame and give permission 
@@ -30,82 +20,33 @@ pygame.init()
 # assigning values to X and Y variable 
 X = 700
 Y = 400
+fondo = Background(X,Y)
+obj = GameObstacle ("Plastic")
+obj2 = GameObstacle ("Barrel")
 
-y_Line = 350
+CambiarTiempo = pygame.USEREVENT + 1
+AppendObstaculo = pygame.USEREVENT + 1
 
-# create the display surface object 
-# of specific dimension...(X, Y). 
-windowSurface = pygame.display.set_mode((X, Y))
-#  ------------------------------------------
-#  |[0,0]           x --> X            [n,0]|
-#  |                                        |
-#  |   y                                    |
-#  |   ¦                                    |
-#  |   v                                    |
-#  |   Y                                    |
-#  |                                        |
-#  |[0,n]                              [n,n]|
-#  ------------------------------------------
+## Append events
+pygame.time.set_timer(CambiarTiempo, 2000)
 
-# set the pygame window name 
-pygame.display.set_caption('Pyguino') 
-  
-# create a surface object, images are drawn on it.
-ambiente = Ambiente(windowSurface)
-almaPinguino = Pinguino(windowSurface)
+fondo.addObstacle(obj)
+fondo.addObstacle(obj2)
 
-# set_timer(eventid, milliseconds) -> None
-# Vamos a crear un evento
-pygame.time.set_timer (pygame.USEREVENT, 1500 )
-
-# Me permite brincar si dejo presionado
-pygame.key.set_repeat(100)
-
-#Añadir records
-
-# completely fill the surface object
-windowSurface.fill(colores.daySky) 
-# Draw a rectangle
-pygame.draw.rect(windowSurface,colores.daySnow,(0,y_Line, X, Y-y_Line))
 clock = pygame.time.Clock()
 
 while True : 
-    clock.tick_busy_loop(40) 
-    # iterate over the list of Event objects 
-    # that was returned by pygame.event.get() method. 
+    dt = clock.tick(60)
+    GameObstacle.dt = dt
     for event in pygame.event.get() : 
-  
-        # if event object type is QUIT 
-        # then quitting the pygame 
-        # and program both. 
         if event.type == pygame.QUIT : 
             # deactivates the pygame library 
             pygame.quit()
             # quit the program. 
             quit()
+        if event.type == CambiarTiempo:
+            fondo.state = not(fondo.state)
+            GameObstacle.dayTime = not(GameObstacle.dayTime) #How to MODIFY a class variable
     
-        # Update the keyboard readings
-        # K_UP -> up arrow
-        if event.type == pygame.KEYDOWN:
-            
-            # If up arrow was pressed
-            if event.key == pygame.K_UP:
-                if not almaPinguino.isJumping:
-                    almaPinguino.isJumping = True
-                    almaPinguino.up_down = True
-            if event.key == pygame.K_DOWN:
-                if almaPinguino.isJumping:
-                    almaPinguino.up_down = False
-                    
-        # En caso de haber pasado un segundo,
-        # añadir nuevo obstaculo 
-        if event.type == pygame.USEREVENT:
-            ambiente.addCactus()
-
-    ambiente.move()
-    almaPinguino.show()
-    # if colision(almaPinguino.pinguinData(), ambiente.incomingObstacleData()):
-    #     print("K")
-    # Draws the surface object to the screen.   
-    pygame.display.update()  
-    
+    fondo.draw()
+    pygame.display.update()

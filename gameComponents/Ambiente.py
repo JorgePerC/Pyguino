@@ -68,7 +68,5 @@ class Ambiente:
 #         self.xPos = 0
 #         self.yPos = 0
 
-class GameObstacle(pygame.Surface):
-    def __init__(self, width, height, image):
-        pygame.Surface.__init__(self, width, height)
-        self.blit(image, (0, 0, width, height))
+
+    
