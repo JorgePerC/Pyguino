@@ -3,6 +3,7 @@ import pygame
 import random
 from collections import deque
 
+# https://stackoverflow.com/questions/35617246/setting-a-fixed-fps-in-pygame-python-3
 
 class Background:
     def __init__(self, X: int, Y: int, pin ):
@@ -80,8 +81,17 @@ class GameObstacle:
             "Mt",
             "Plastic"
             ]
+            
             rad = random.randint(0,len(obstacles)-1)
             obstacle = obstacles[rad]
+
+            # Desfazamiento 
+            if obstacle == "Barrel":
+                des = 23
+            elif obstacle == "Fin":
+                des = 24
+            else:
+                des = 0
         self.__dayImg = pygame.image.load("resources/Day/day" + obstacle + ".png")
         self.__nightImg = pygame.image.load("resources/Night/night" + obstacle + ".png")
         
@@ -90,7 +100,7 @@ class GameObstacle:
         self.__width = self.__dayImg.get_width()
         self.__height = self.__dayImg.get_height()
 
-        self.__Y = 350-self.__height
+        self.__Y = 350 - self.__height + des
         self.__X = 700
 
     def img (self):
@@ -178,10 +188,10 @@ class Pinguin(SingleImage):
                     self.isGoingUp = not( self.__isGoingUp)
                     
                 self.jumpCount -=1
-                self.__h = (self.jumpCount**2) * SingleImage.dt * 0.04
+                self.__h = ((0.8*self.jumpCount)**2) * SingleImage.dt * 0.08
             else:
                 self.jumpCount +=1
-                self.__h = (self.jumpCount**2) * SingleImage.dt * -0.04
+                self.__h = ((0.8*self.jumpCount)**2) * SingleImage.dt * -0.08
         # Me indica cuando termina el brinco
         if self.__h <= 0:
             # print("Termino brinco")

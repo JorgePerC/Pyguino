@@ -35,6 +35,9 @@ pygame.time.set_timer(AppendObstaculo, 1000)
 
 clock = pygame.time.Clock()
 
+# Me permite brincar si dejo presionado
+pygame.key.set_repeat(100)
+
 while True : 
     dt = clock.tick(60)
     GameObstacle.dt = dt
