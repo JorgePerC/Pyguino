@@ -178,20 +178,13 @@ class Pinguin(SingleImage):
         self.__isJumping = False
         self.__isGoingUp = False
         self.__h = 0
+        self.__initialV = 70
         self.jumpCount = 0
 
     def jump(self):
         if self.__isJumping:
-            print("Is Jumping")
-            if self.__isGoingUp:
-                if self.jumpCount == 1:
-                    self.isGoingUp = not( self.__isGoingUp)
-                    
-                self.jumpCount -=1
-                self.__h = ((0.8*self.jumpCount)**2) * SingleImage.dt * 0.08
-            else:
-                self.jumpCount +=1
-                self.__h = ((0.8*self.jumpCount)**2) * SingleImage.dt * -0.08
+            self.jumpCount += SingleImage.dt*0.01
+            self.__h = (self.__initialV * self.jumpCount) - (5*self.jumpCount**2)
         # Me indica cuando termina el brinco
         if self.__h <= 0:
             # print("Termino brinco")
@@ -207,7 +200,7 @@ class Pinguin(SingleImage):
     
     @isJumping.setter #Lo ponemos como un decorator, para que el getter se vea bonito
     def isJumping(self, value : bool):
-        self.jumpCount = 15
+        self.jumpCount = 0
         self.__isJumping = value   
     #-------------------------------------------------
     @property #Lo ponemos como una propiedad, para que el setter se vea bonito

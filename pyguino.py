@@ -30,8 +30,8 @@ CambiarTiempo = pygame.USEREVENT + 1
 AppendObstaculo = pygame.USEREVENT + 2
 
 ## Append events
-pygame.time.set_timer(CambiarTiempo, 2000)
-pygame.time.set_timer(AppendObstaculo, 1000)
+pygame.time.set_timer(CambiarTiempo, 5000)
+pygame.time.set_timer(AppendObstaculo, 1500)
 
 clock = pygame.time.Clock()
 
@@ -58,12 +58,10 @@ while True :
         if event.type == pygame.KEYDOWN:    
             # If up arrow was pressed
             if event.key == pygame.K_UP:
-                print("K_Up")
                 if not pinguino.isJumping:
                     pinguino.isJumping = True
                     pinguino.isGoingUp = True
             if event.key == pygame.K_DOWN:
-                print("K_Down")
                 if pinguino.isJumping:
                     pinguino.isGoingUp = False
     
