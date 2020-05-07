@@ -16,6 +16,10 @@ Dino game versión pingüino. ¡Hagamos consciencia ambiental!
 ## Links interesantes:
   1. documentación de Pygame: https://www.pygame.org/docs/
   
-  2. No está tan mala
+  No está tan mala.
+  
+  2. Pygame en YouTube: https://www.youtube.com/playlist?list=PLzMcBGfZo4-lp3jAExUCewBfMx3UZFkh5
+  
+  3. Yo recomiendo buscar en GeeksForGeeks
   
   
