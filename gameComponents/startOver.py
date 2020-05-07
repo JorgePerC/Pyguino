@@ -6,7 +6,10 @@ from collections import deque
 # https://stackoverflow.com/questions/35617246/setting-a-fixed-fps-in-pygame-python-3
 
 class Background:
-    def __init__(self, X: int, Y: int, pin ):
+
+    jugadorIsDead = False
+
+    def __init__(self, X: int, Y: int, pin, score):
         self.__colores = Colores()
         self.__state = False
         self.__y_Line = 350
@@ -16,25 +19,35 @@ class Background:
         self.__obstacles = deque()
 
         self.__moon = pygame.image.load("resources/Night/nightMoon.png")
+        self.__gameOver = pygame.image.load("resources/game-over.png")
+
         self.__pinguin = pin
+        self.__score = score
 
         pygame.display.set_caption('Pyguino') 
 
     def draw(self):
-        if self.__state:
-            # completely fill the surface object
-            self.W.fill(self.__colores.daySky) 
-            # Draw a rectangle
-            pygame.draw.rect(self.W, 
-                self.__colores.daySnow, 
-                (0, self.__y_Line, self.__X, self.__Y-self.__y_Line))
-        else:
-            self.W.fill(self.__colores.nightSky) 
-            pygame.draw.rect(self.W, 
-                self.__colores.nightSnow, 
-                (0, self.__y_Line, self.__X, self.__Y-self.__y_Line))
-        a = self.addImages()
-        self.W.blits( a ) # Calling the method
+
+            if self.__state:
+                # completely fill the surface object
+                self.W.fill(self.__colores.daySky) 
+                # Draw a rectangle
+                pygame.draw.rect(self.W, 
+                    self.__colores.daySnow, 
+                    (0, self.__y_Line, self.__X, self.__Y-self.__y_Line))
+            else:
+                self.W.fill(self.__colores.nightSky) 
+                pygame.draw.rect(self.W, 
+                    self.__colores.nightSnow, 
+                    (0, self.__y_Line, self.__X, self.__Y-self.__y_Line))
+            a = self.addImages()
+            # https://stackoverflow.com/questions/35304498/what-are-the-pygame-surface-get-rect-key-arguments
+            if a[0][0].get_rect(topleft = a[0][1]).colliderect(a[-1][0].get_rect( topleft =  a[-1][1])):
+                # Choca y termina el juego
+                Background.jugadorIsDead = True
+            self.W.blits( a ) # Calling the method
+                    # Draw Score
+            self.W.blit(self.__score.getScore(), (560, 20))
     
     @property
     def state (self):
@@ -54,8 +67,10 @@ class Background:
             else:
                 drawings.append((obstacle.img(), (xpos, obstacle.Y)))
                 # Append a tupple at drawings
+        # Draw moon only when is night
         if not self.__state:
             drawings.append( (self.__moon, (500, 20)) )
+        # Draw penguin
         drawings.append( (self.__pinguin.img, 
             (self.__pinguin.X, 
             self.__pinguin.Y - self.__pinguin.height - self.__pinguin.jump())) )
@@ -63,6 +78,13 @@ class Background:
     
     def addObstacle(self, obs): # How to make a class, a type?
         self.__obstacles.append(obs)
+
+    def gameOver(self):
+        self.W.fill(self.__colores.water)
+        self.W.blit(self.__score.getScore(), (325, 150))
+        self.W.blit(self.__gameOver, (300, 50))
+
+
 
 class GameObstacle:
     dayTime = False # Class variable, this is kinda static
@@ -95,7 +117,7 @@ class GameObstacle:
         self.__dayImg = pygame.image.load("resources/Day/day" + obstacle + ".png")
         self.__nightImg = pygame.image.load("resources/Night/night" + obstacle + ".png")
         
-        self.__speed = .2
+        self.__speed = 30
         
         self.__width = self.__dayImg.get_width()
         self.__height = self.__dayImg.get_height()
@@ -107,7 +129,7 @@ class GameObstacle:
         return self.__dayImg if GameObstacle.dayTime else self.__nightImg
 
     def updateXPosition(self):
-        self.__X -= self.__speed * GameObstacle.dt
+        self.__X -= self.__speed * GameObstacle.dt*0.01
         return self.__X
 
     @property
@@ -210,3 +232,34 @@ class Pinguin(SingleImage):
     @isGoingUp.setter #Lo ponemos como un decorator, para que el getter se vea bonito
     def isGoingUp(self, value : bool):
         self.__isGoingUp = value  
+
+class Score:
+
+    dt = 0
+
+    def __init__(self):
+        self.fontObj = pygame.font.SysFont("swiss721", 20)
+        self.__count = 0
+        self.__active = True
+
+    def increment(self):
+        if self.__active:
+            self.__count += round(Score.dt*0.1 )            
+    
+    def getScore(self):
+        self.increment()
+        score = self.fontObj.render(str(int(self.__count*0.4)), True, (0,0,0))
+        return score
+
+    @property
+    def active (self):
+        return self.__active
+    
+    @active.setter
+    def active (self, value: bool):
+        self.__active = value
+
+# TODO: 
+# It would be nice if in a future we implement inheritance from the surface object.
+# A lot of class attributes would have been avoided.
+# For the moment, I'm satisfied with the result

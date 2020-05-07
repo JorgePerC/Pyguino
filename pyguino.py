@@ -4,8 +4,7 @@
 
 import pygame
 import numpy as np
-from gameComponents.Pinguino import Pinguino
-from gameComponents.startOver import Background, GameObstacle, SingleImage, Pinguin
+from gameComponents.startOver import Background, GameObstacle, SingleImage, Pinguin, Score
 # from gameComponents.AllGame import Colores, Pinguino, Ambiente
 
 # Somebody on the internet, said I should investigate engines to make my program
@@ -22,12 +21,15 @@ X = 700
 Y = 400
 
 pinguino = Pinguin()
+marcador = Score()
 
-fondo = Background(X,Y, pinguino)
-
+fondo = Background(X,Y, pinguino, marcador)
 
 CambiarTiempo = pygame.USEREVENT + 1
 AppendObstaculo = pygame.USEREVENT + 2
+MurioJugador = pygame.USEREVENT + 3
+
+GameOver = pygame.event.Event(MurioJugador, message="Bad cat!")
 
 ## Append events
 pygame.time.set_timer(CambiarTiempo, 5000)
@@ -38,10 +40,13 @@ clock = pygame.time.Clock()
 # Me permite brincar si dejo presionado
 pygame.key.set_repeat(100)
 
+showEndGame = False
+
 while True : 
     dt = clock.tick(60)
     GameObstacle.dt = dt
     SingleImage.dt = dt
+    Score.dt = dt
     
     for event in pygame.event.get() : 
         if event.type == pygame.QUIT : 
@@ -54,6 +59,10 @@ while True :
             GameObstacle.dayTime = not(GameObstacle.dayTime) #How to MODIFY a class variable
         if event.type == AppendObstaculo:
             fondo.addObstacle(GameObstacle())
+        if event.type == MurioJugador:
+            marcador.active = False
+            showEndGame = True
+            
         
         if event.type == pygame.KEYDOWN:    
             # If up arrow was pressed
@@ -64,8 +73,17 @@ while True :
             if event.key == pygame.K_DOWN:
                 if pinguino.isJumping:
                     pinguino.isGoingUp = False
+    # Está así para ver si en un futuro encuentro una
+    # solución más modular
+    if Background.jugadorIsDead:
+        pygame.event.post(GameOver)
     
-    fondo.draw()
+    if showEndGame:
+        fondo.gameOver()    
+    else:
+        fondo.draw()
+    
     pygame.display.update()
+    
 
 

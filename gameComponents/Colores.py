@@ -13,7 +13,7 @@ class Colores:
         self.wSnow = (155,172,191)
 
         # self.white = (255,255,255)
-        # self.black = (0,0,0)
+        self.black = (0,0,0)
         # self.veryGreen = (0,255,0)
         # self.veryRed = (255,0,0)
         # self.veryBlue = (0,0,255)
