@@ -6,7 +6,7 @@ Dino game versión pingüino. ¡Hagamos consciencia ambiental!
 
 ## Nuestro representante oficial:
 <p align="center">
-  <img width="400" height="400" src="/resources/lolly.png">
+  <img src="/resources/lolly.png">
 </p>
 
 ## Autores:
