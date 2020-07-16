@@ -69,7 +69,7 @@ class Background:
         a = self.addImages()
         # More on how collision works: 
         # https://stackoverflow.com/questions/35304498/what-are-the-pygame-surface-get-rect-key-arguments
-        if a[0][0].get_rect(topleft = a[0][1]).colliderect(a[-1][0].get_rect( topleft =  a[-1][1])):
+        if a[0][0].get_rect( topleft = a[0][1] ).colliderect( a[-1][0].get_rect( topleft =  a[-1][1]) ):
             # Choca y termina el juego
             Background.jugadorIsDead = True
         # Drawing several images in the brackground, more efficiente than doing blit
