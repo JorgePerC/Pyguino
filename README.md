@@ -1,6 +1,8 @@
 # Pyguino
 
 Dino game versión pingüino. ¡Hagamos consciencia ambiental!
+Programado en Python con Pygame.
+Por el momento el pinguino brinca obstáculos, como basura, o incluso un cazador! Tiene un night mode, muy bonito. Para la versión 2, se incluirá una versión debajo del agua. 
 
 #NoMas
 #ClimateLatency
